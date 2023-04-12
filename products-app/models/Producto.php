@@ -1,7 +1,7 @@
 <?php
-class Producto {
-  private string $nombreProducto;
-  private float $precio;
+abstract class Producto {
+  protected string $nombreProducto;
+  protected float $precio;
   private string $id;
 
   private int $orden;
@@ -26,5 +26,11 @@ class Producto {
   static function aplicarDescuento25 (float $precio): float {
     return $precio * 0.75;
   }
+
+  public function __toString() :string {
+    return join(' | ', [$this->id, $this->nombreProducto, $this->precio.' €']);
+  }
+
+  abstract function dimeTipo (): string;
 
 }
