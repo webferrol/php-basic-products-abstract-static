@@ -14,14 +14,16 @@ if (!isset($_SESSION['productos']))
 
 //Gestión del formulario
 $tipo = $_GET['tipo']??'no-existe';
+$nombreProducto = htmlspecialchars($_GET['nombre-producto']);
+$precioProducto = filter_var($_GET['precio-producto'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
 switch ($tipo) {
   case 'alimento':
-    $p = new Alimento($_GET['nombre-producto'], floatval($_GET['precio-producto']));
+    $p = new Alimento($nombreProducto, floatval($precioProducto));
     array_push($_SESSION['productos'], $p);    
     break;
   case 'utensilio':
-    $p = new Utensilio($_GET['nombre-producto'], floatval($_GET['precio-producto']));
+    $p = new Utensilio($nombreProducto, floatval($precioProducto));
     array_push($_SESSION['productos'] , $p);
     break;
   default:

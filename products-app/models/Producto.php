@@ -11,6 +11,7 @@ abstract class Producto {
 
   function __construct (string $nombreProducto, float $precio) {
     $this->orden = ++Producto::$serie;
+    echo $this->orden;
     $this->id = strlen($nombreProducto) > 1 
                 ? strtoupper(substr($nombreProducto, 0, 2)).'-'.$this->orden
                 : '##-'.$this->orden;
@@ -19,8 +20,16 @@ abstract class Producto {
     $this->fechaAlta = new DateTime();
   }
 
+  function getId (): string {
+    return $this->id;
+  }
+
   function getPrecio (): float {
     return $this->precio;
+  }
+
+  function getNombreProducto (): string {
+    return $this->nombreProducto;
   }
 
   static function aplicarDescuento25 (float $precio): float {
