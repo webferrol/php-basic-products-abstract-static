@@ -5,7 +5,7 @@ abstract class Producto {
   private string $id;
 
   private int $orden;
-  private static int $serie = 0;
+  public static int $serie = 0;
 
   private DateTime $fechaAlta;
 
@@ -24,12 +24,24 @@ abstract class Producto {
     return $this->id;
   }
 
+  function getOrden (): int {
+    return $this->orden;
+  }
+
   function getPrecio (): float {
     return $this->precio;
   }
 
   function getNombreProducto (): string {
     return $this->nombreProducto;
+  }
+
+  function setPrecio (float $precio): void {
+    $this->precio = $precio;
+  }
+
+  function setNombreProducto (string $nombreProducto): void {
+    $this->nombreProducto = $nombreProducto;
   }
 
   static function aplicarDescuento25 (float $precio): float {

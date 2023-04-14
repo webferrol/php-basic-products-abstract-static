@@ -1,15 +1,50 @@
 <?php
 declare(strict_types = 1);
+require_once('../models/Compra.php');
 session_start();
 
-require_once('../models/Compra.php');
+
+function dimeOrdenMasAlto ($productos): int {
+
+   $orden = 0;
+
+   foreach($productos as $producto) {
+    if ($producto->getOrden() > $orden) {
+      $orden = $producto->getOrden();
+    } 
+   }
+
+   return $orden;
+
+
+    // return array_reduce(
+    //   $productos,
+    //   function ($valorPrevio, $producto) {
+    //     if ($producto->getOrden() > $valorPrevio) 
+    //       return $producto->getOrden();
+    //     else 
+    //      return $valorPrevio;
+    //   },
+    //   0
+    // );
+}
+
 // Validaciones
 if (count($_GET) === 0) {
   die('Operación no válida');
 }
 
+$ultimoProductoOrden = 0;
+
 if (!isset($_SESSION['productos']))
   $_SESSION['productos'] = [];
+else {
+  $ultimoIndice = count($_SESSION['productos']) - 1;
+  $ultimoProductoOrden = dimeOrdenMasAlto($_SESSION['productos']);
+}
+
+// Cargar la propiedad de clase llamada serie
+Producto::$serie = $ultimoProductoOrden;
 
 
 //Gestión del formulario
